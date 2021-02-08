@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    name: Testing on PHP ${{ matrix.php }}
+    strategy:
+      matrix:
+        php: ['7.2', '7.3', '7.4', '8.0']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: ${{ matrix.php }}
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --ignore-platform-reqs --optimize-autoloader
+
+      - name: Test php code
+        run: composer test

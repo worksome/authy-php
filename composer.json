@@ -25,6 +25,12 @@
             "role": "Developer"
         }
     ],
+    "scripts": {
+        "test:pest" : "vendor/bin/phpunit",
+        "test": [
+            "@test:pest"
+        ]
+    },
     "autoload": {
         "psr-0": {
             "Authy": "lib"
